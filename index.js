@@ -2,7 +2,7 @@ import express from 'express';
 import projectsRouter from './src/routes/projects.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { app } from './firebase.js'
+import { app } from './src/lib/firebase.js';
 
 const jsonParser = bodyParser.json();
 

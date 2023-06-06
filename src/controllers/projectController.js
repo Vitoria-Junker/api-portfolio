@@ -1,12 +1,11 @@
 
-  
   import { getDatabase, ref, set, push, get, remove} from 'firebase/database';
-  //import Project from '../models/project.js';
   import projectSchema from '../validation/projectsValidation.js';
   import Project from '../models/project.js';
 
  const save = async (project) => {
     try {
+      //chamar uma funçao que faz o upload da imagem para o storage do firebase e retorna a url 
       await projectSchema.validate(project);
       const database = getDatabase();
       const projectsRef = ref(database, 'projects');
@@ -66,8 +65,6 @@
       return;
     }
   
-    const project = projectSnapshot.val();
-  
     try {
       const { name, link, description, img } = req.body;
       const updatedProject = new Project(name, link, description, img);
@@ -96,8 +93,6 @@
     res.status(200).json({ message: 'Projeto removido com sucesso.' });
   };
   
-
-
   export default {
     save,
     getAll,

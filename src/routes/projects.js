@@ -2,8 +2,28 @@
 import express from 'express';
 import projectController from '../controllers/projectController.js';
 import Project from '../models/project.js';
+import { uploadImage } from '../services/uploadImage.js';
+import multer from 'multer';
 
 const projectsRouter = express.Router();
+//const upload = multer({ dest: 'uploads/' }).single('img');
+const upload = multer({ storage: multer.memoryStorage() }).single('img');
+
+projectsRouter.post('/upload', upload, async (req, res) => {
+
+  if (!req.file || !req.file.buffer) {
+    return res.status(400).send('Nenhum arquivo foi enviado.');
+  }
+  
+  const file = req.file;
+  try {
+    const imageUrl = await uploadImage(file);
+    res.send({ url: imageUrl });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Erro ao fazer upload');
+  }
+});
 
 projectsRouter.post('/new', async (req, res) => {
     
