@@ -4,7 +4,6 @@ import projectController from '../controllers/projectController.js';
 import Project from '../models/project.js';
 import { uploadImage } from '../services/uploadImage.js';
 import multer from 'multer';
-
 const projectsRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() }).single('img');
 
@@ -26,8 +25,8 @@ projectsRouter.post('/upload', upload, async (req, res) => {
 
 projectsRouter.post('/new', async (req, res) => {
     
-    const { name, link, description, img } = req.body;
-    const project = new Project( name, link, description, img);
+    const { name, link, description, img, tecnologies } = req.body;
+    const project = new Project( name, link, description, img, tecnologies);
   try {
     await projectController.save(project);
     res.status(201).send('Projeto salvo com sucesso!');

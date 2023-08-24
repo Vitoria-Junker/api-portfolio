@@ -66,8 +66,8 @@
     }
   
     try {
-      const { name, link, description, img } = req.body;
-      const updatedProject = new Project(name, link, description, img);
+      const { name, link, description, img, tecnologies } = req.body;
+      const updatedProject = new Project(name, link, description, img, tecnologies);
       await set(projectRef, updatedProject);
       res.status(200).json({ message: 'Projeto atualizado com sucesso.' }); return
     } catch (err) {
